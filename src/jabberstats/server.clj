@@ -1,6 +1,6 @@
 (ns jabberstats.server
   (:require [noir.server :as server]
-            [jabberstats.jsonmiddle :as jsonmiddle]
+            [jabberstats.jsonmiddle :as js]
             [jabberstats.db  :as db]))
 
 (server/load-views "src/jabberstats/views/")
@@ -9,7 +9,7 @@
   (let [mode (keyword (or (first m) :dev))
         port (Integer. (get (System/getenv) "PORT" "8080"))]
     
-    (server/add-middleware jsonmiddle/parse-json-values)
+    (server/add-middleware js/parse-json-values)
     (db/init)
     (server/start port {:mode mode
                         :ns 'jabberstats})))
